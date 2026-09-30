@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "semantic-index-sync-kit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rajatslakhina/semantic-index-sync-kit.git",
+      "state" : {
+        "revision" : "be41382a63c062eefedcfa60d5aefb8bb08689a1",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
