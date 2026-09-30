@@ -73,7 +73,11 @@ Three separate claims, kept separate on purpose.
 
 **1. The library was genuinely built and tested.** A clean zero-warning build (`rm -rf .build && swift build -Xswiftc -warnings-as-errors`) and **86 of 86 tests passing** on Swift 6.1.2, plus a mutation check. Documented in [its README](https://github.com/rajatslakhina/semantic-index-sync-kit#verification). This actually happened.
 
-**2. This app compiling against the real remote package — CI is configured to check it, results on the [Actions tab](../../actions).** The workflow runs `xcodebuild -resolvePackageDependencies` and then `xcodebuild build -scheme Demo -destination 'generic/platform=iOS Simulator'` on `macos-15`. When it passes, that establishes two things: the package genuinely resolves from GitHub at the pinned tag, and the app — including the SwiftUI view — compiles against it. Read the Actions tab for the live answer rather than trusting this sentence; a README is not evidence.
+**2. This app compiles against the real remote library — verified by CI, and it caught a real break first.** The workflow runs `xcodebuild -resolvePackageDependencies` and then `xcodebuild build -scheme Demo -destination 'generic/platform=iOS Simulator'` on `macos-15`. It **passed**, which establishes two things: the library genuinely resolves from GitHub at the recorded revision, and this app — including the library's SwiftUI view — compiles against it.
+
+It is worth saying how it got there, because the first run **failed**, and that failure is the argument for having the job at all. The library's `v2.0.0` removed a field from `SeedDocument`, and `DemoCorpus.swift` — which lives in *this* repository and so was never compiled while the library was being developed — still passed it. Nothing local caught it: the package's own CI was green, because the package was fine. Only the job that builds this app against the published library surfaced it, as `EmitSwiftModule normal x86_64 (in target 'Demo')`, exit code 65. That is precisely the seam two repositories create, and precisely why the demo has CI of its own rather than relying on the library's.
+
+Read the [Actions tab](../../actions) for the live answer rather than trusting this paragraph; a README is not evidence.
 
 **3. Run on a Simulator: NO. This did not happen.** The app was never launched, no UI was ever observed, and no screenshot was taken. The table above describes what the code does, traced by hand — not something anyone watched happen. **A passing build is not a launch, and nothing here should be read as one.**
 
