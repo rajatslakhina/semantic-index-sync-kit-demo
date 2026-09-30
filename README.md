@@ -71,7 +71,7 @@ Requires Xcode 16 or later and an iOS 17 deployment target.
 
 Three separate claims, kept separate on purpose.
 
-**1. The library was genuinely built and tested.** A clean zero-warning build (`rm -rf .build && swift build -Xswiftc -warnings-as-errors`) and **86 of 86 tests passing** on Swift 6.1.2, plus a mutation check. Documented in [its README](https://github.com/rajatslakhina/semantic-index-sync-kit#verification). This actually happened.
+**1. The library was genuinely built and tested.** A clean zero-warning build (`rm -rf .build && swift build -Xswiftc -warnings-as-errors`) and **98 of 98 tests passing** on Swift 6.1.2, plus a mutation check. Documented in [its README](https://github.com/rajatslakhina/semantic-index-sync-kit#verification). This actually happened.
 
 **2. This app compiles against the real remote library — verified by CI, and it caught a real break first.** The workflow runs `xcodebuild -resolvePackageDependencies` and then `xcodebuild build -scheme Demo -destination 'generic/platform=iOS Simulator'` on `macos-15`. It **passed**, which establishes two things: the library genuinely resolves from GitHub at the recorded revision, and this app — including the library's SwiftUI view — compiles against it.
 
@@ -87,7 +87,7 @@ What blocked it, specifically: this was an unattended scheduled run. Computer-us
 
 The only remaining path was a full-screen takeover of a machine that had the user's own Finder windows open, with nobody present to supervise it. That was declined rather than risk disturbing unrelated work.
 
-One further honesty note, since it is the kind of thing a reviewer should not have to discover: `IndexWorkbenchView.swift` has never been compiled on this machine — the package guards it behind `#if canImport(SwiftUI)`, so the Linux build skips it entirely. Its view model and configuration *were* separately type-checked under Swift 6 strict concurrency with that guard removed. The CI job above is the only thing that compiles the view itself.
+One further note on coverage, since it is the kind of thing a reviewer should not have to discover: `IndexWorkbenchView.swift` is the only file behind `#if canImport(SwiftUI)`, so the library's Linux build skips it and the iOS CI job is the only thing that compiles it. Everything else in that module — the view model, the configuration and the scenario builder — is deliberately *not* guarded, so it is compiled by the ordinary Linux build and covered by twelve tests in the library's `SemanticIndexSyncUITests` target.
 
 ## Why two repositories
 
