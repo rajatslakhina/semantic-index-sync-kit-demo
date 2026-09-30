@@ -44,7 +44,6 @@ extension WorkbenchConfiguration {
     private static let seedDocuments: [SeedDocument] = [
         SeedDocument(
             id: "thermal-policy",
-            title: "Background re-index policy",
             passages: [
                 "The re-index queue pauses when the device thermal state exceeds the configured ceiling, and resumes on the next pass without losing its place.",
                 "A deferred pass returns a typed reason rather than a bare false, because a support engineer eventually has to explain why a user's index stopped progressing.",
@@ -54,7 +53,6 @@ extension WorkbenchConfiguration {
         ),
         SeedDocument(
             id: "sync-rules",
-            title: "Multi-device reconciliation",
             passages: [
                 "Version vectors distinguish a stale write from a concurrent one, which is the distinction a wall-clock timestamp throws away entirely.",
                 "A tombstone is never resurrected by a concurrent edit; between losing an edit and resurfacing deleted personal content, only the first is recoverable by the user.",
@@ -64,7 +62,6 @@ extension WorkbenchConfiguration {
         ),
         SeedDocument(
             id: "epoch-migration",
-            title: "Embedding epoch migration",
             passages: [
                 "Comparing a query vector against a stored vector from a different model revision produces a finite, sortable number that means nothing at all.",
                 "Vectors from the previous epoch are retained rather than deleted, so a rollback restores full coverage instantly instead of triggering a second re-index.",
@@ -74,7 +71,6 @@ extension WorkbenchConfiguration {
         ),
         SeedDocument(
             id: "retrieval-floor",
-            title: "Hybrid ranking",
             passages: [
                 "BM25 is unbounded and cosine similarity is capped at one, so the two score spaces are normalised within each query before being combined.",
                 "Okapi IDF goes negative for a term present in every document, silently inverting the ranking, which is why the smoothing term is not optional.",
